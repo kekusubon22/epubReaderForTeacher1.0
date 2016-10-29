@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 using System.Management;
 
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// PNGWindow.xaml の相互作用ロジック

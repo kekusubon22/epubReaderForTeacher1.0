@@ -11,7 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
+
 {
     /// <summary>
     /// PNGAnnotationToolsWindow.xaml の相互作用ロジック

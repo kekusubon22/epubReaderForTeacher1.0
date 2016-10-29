@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// App.xaml の相互作用ロジック

@@ -1,4 +1,4 @@
-﻿<Window x:Class="epubReader4._0_Dino.AnnotationToolsWindow"
+﻿<Window x:Class="epubReaderForTeacher1._0.AnnotationToolsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AnnotationToolsWindow" Height="320" Width="70" AllowsTransparency="True" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FF9E9E9E">

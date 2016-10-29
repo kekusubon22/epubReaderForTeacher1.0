@@ -23,7 +23,7 @@ using WebKit.JSCore;
 using System.Drawing;
 using System.Windows.Interop;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック

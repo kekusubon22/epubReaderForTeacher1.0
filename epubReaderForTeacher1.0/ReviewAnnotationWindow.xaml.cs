@@ -19,7 +19,7 @@ using System.Windows.Ink;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// ReviewAnnotationWindow.xaml の相互作用ロジック

@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 
 using System.Windows.Ink;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// PNGPopupWindow.xaml の相互作用ロジック

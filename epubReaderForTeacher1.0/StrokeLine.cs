@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     public class StrokeLine
     {

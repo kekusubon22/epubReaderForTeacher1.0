@@ -1,4 +1,4 @@
-﻿<Window x:Class="epubReader4._0_Dino.PNGAnnotationToolsWindow"
+﻿<Window x:Class="epubReaderForTeacher1._0.PNGAnnotationToolsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PNGAnnotationToolsWindow" Height="320" Width="70" AllowsTransparency="True" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">

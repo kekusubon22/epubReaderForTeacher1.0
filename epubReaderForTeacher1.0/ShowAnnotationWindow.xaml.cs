@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 using System.IO;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// ShowAnnotationWindow.xaml の相互作用ロジック

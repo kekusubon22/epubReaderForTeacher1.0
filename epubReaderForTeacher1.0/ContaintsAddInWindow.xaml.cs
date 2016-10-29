@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using WebKit;
 using WebKit.JSCore;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// ContaintsAddInWindow.xaml の相互作用ロジック

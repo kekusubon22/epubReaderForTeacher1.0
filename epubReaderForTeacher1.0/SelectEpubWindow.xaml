@@ -1,4 +1,4 @@
-﻿<Window x:Class="epubReader4._0_Dino.SelectEpubWindow"
+﻿<Window x:Class="epubReaderForTeacher1._0.SelectEpubWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SelectEpubWindow" Height="500" Width="300" WindowState="Maximized" WindowStyle="ToolWindow" Background="#FFC8C8FF">

@@ -22,7 +22,7 @@ using System.IO;
 //using System.Delegate;
 //using System.Reflection.EventInfo;
 
-namespace epubReader4._0_Dino
+namespace epubReaderForTeacher1._0
 {
     /// <summary>
     /// SelectEpubWindow.xaml の相互作用ロジック
