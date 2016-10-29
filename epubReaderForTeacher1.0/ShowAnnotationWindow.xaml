@@ -1,0 +1,12 @@
+﻿<Window x:Class="epubReader4._0_Dino.ShowAnnotationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ShowAnnotationWindow" Height="500" Width="300" WindowState="Maximized" WindowStyle="ToolWindow">
+    <ScrollViewer Name="scrollViewer1" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto">
+        <Grid Name="grid2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+        </Grid>
+    </ScrollViewer>
+</Window>

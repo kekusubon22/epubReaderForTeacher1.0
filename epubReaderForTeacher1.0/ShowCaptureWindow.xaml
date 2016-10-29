@@ -1,0 +1,19 @@
+﻿<Window x:Class="epubReader4._0_Dino.ShowCaptureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ShowCaptureWindow" Height="800" Width="800" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image Name="image1" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <Button Content="◀" Name="imageBackButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Grid.Row="0" Grid.Column="0" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Click="imageBackButton_Click" />
+        <Button Content="▶" Name="imageNextButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Grid.Row="0" Grid.Column="1" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Click="imageNextButton_Click" />
+
+    </Grid>
+</Window>
