@@ -27,7 +27,7 @@ namespace epubReaderForTeacher1._0
 
         private void init()
         {
-            System.Threading.Thread.Sleep(5000);
+            System.Threading.Thread.Sleep(1000);
             SelectEpubWindow dialog = new SelectEpubWindow();
             dialog.Show();
             this.Owner = dialog;

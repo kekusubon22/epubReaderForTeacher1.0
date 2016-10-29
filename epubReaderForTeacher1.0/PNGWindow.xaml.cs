@@ -120,7 +120,7 @@ namespace epubReaderForTeacher1._0
             //解凍先とcontent.opfのパス
             thawPath = epubDirectory + "\\" + epubFileName.Replace(".epub", "");
             string opfPath = thawPath + "\\OEBPS\\content.opf";
-            
+
             //Popup画像の置場
             popupDirectory = thawPath + "\\PopupImage";
             System.IO.Directory.CreateDirectory(popupDirectory);
@@ -247,8 +247,75 @@ namespace epubReaderForTeacher1._0
             //image1.AddHandler(System.Windows.Controls.Image.MouseMoveEvent, new MouseEventHandler(image1_MouseMove), true);
             //image1.AddHandler(System.Windows.Controls.Image.MouseUpEvent, new MouseButtonEventHandler(image1_MouseUp), true);
 
-            //ここから要素の情報をxhtmlから取得する
-            //現在表示しているページのxhtmlを調べる
+            //要素の情報をxhtmlから取得する
+            setElementInfo();
+
+            //前に描画した情報があれば読み込む
+            try
+            {
+                RoadAnnotateRecord();
+                drawAll();
+            }
+            catch
+            {
+                //MessageBox.Show("再読み込み失敗");
+            }
+
+            //ユーザ情報の読み込み なければ新たに書き入れる
+            string userFileName = epubDirectory.Replace("\\epub", "\\user.xml");
+            if (File.Exists(userFileName))
+            {
+                //XmlSerializerオブジェクトを作成
+                System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(User));
+
+                //読み込むファイルを開く
+                System.IO.StreamReader sr = new System.IO.StreamReader(userFileName, new System.Text.UTF8Encoding(false));
+
+                //XMLファイルから読み込み、逆シリアル化する
+                user = (User)serializer.Deserialize(sr);
+
+                //ファイルを閉じる
+                sr.Close();
+            }
+            else
+            {
+                // 0 以上 512 未満の乱数を取得する
+                Random rand = new System.Random();
+                int r = rand.Next(0, 1000);
+
+                //保存するクラス(User)
+                string userId = r + "";
+                if (r < 100)
+                {
+                    userId = "0" + r;
+                    if (r < 10)
+                    {
+                        userId = "0" + userId;
+                    }
+                }
+                user.SetId("ST" + userId);
+                user.SetType("student");
+
+                //XmlSerializerオブジェクトを作成 
+                //オブジェクトの型を指定する
+                System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(User));
+
+                //書き込むファイルを開く（UTF-8 BOM無し）
+                System.IO.StreamWriter sw = new System.IO.StreamWriter(userFileName, false, new System.Text.UTF8Encoding(false));
+
+                //シリアル化し、XMLファイルに保存する
+                serializer.Serialize(sw, user);
+
+                //ファイルを閉じる
+                sw.Close();
+            }
+
+        }
+
+        //要素の情報をセットするメソッド
+        public void setElementInfo()
+        {
+            elementList = new List<Element>();
 
             // XmlDocumentオブジェクトを作成
             XmlDocument xhtmlDoc = new XmlDocument();
@@ -261,7 +328,7 @@ namespace epubReaderForTeacher1._0
                 // <element>要素をセット
                 XmlNodeList xhtmlNode = xhtmlRoot.GetElementsByTagName("element");
 
-                i = 0;
+                int i = 0;
                 while (true)
                 {
                     try
@@ -290,74 +357,13 @@ namespace epubReaderForTeacher1._0
             {
                 MessageBox.Show(Ex.Message);
             }
-
-
-            //前に描画した情報があれば読み込む
-            try
-            {
-                RoadAnnotateRecord();
-                drawAll();
-            }
-            catch
-            {
-                //MessageBox.Show("再読み込み失敗");
-            }
-
-            //ユーザ情報の読み込み なければ新たに書き入れる
-            string userFileName =  epubDirectory.Replace("\\epub","\\user.xml");
-            if( File.Exists(userFileName) )
-            {
-                //XmlSerializerオブジェクトを作成
-                System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(User));
-               
-                //読み込むファイルを開く
-                System.IO.StreamReader sr = new System.IO.StreamReader( userFileName, new System.Text.UTF8Encoding(false));
-                
-                //XMLファイルから読み込み、逆シリアル化する
-                user = (User)serializer.Deserialize(sr);
-                
-                //ファイルを閉じる
-                sr.Close();
-            }
-
-            else
-            {
-                // 0 以上 512 未満の乱数を取得する
-                Random rand = new System.Random();
-                int r = rand.Next(0, 1000);
-
-                //保存するクラス(User)
-                string userId = r + "";
-                if (r < 100)
-                {
-                    userId = "0" + r;
-                    if(r < 10)
-                    {
-                        userId = "0" + userId;
-                    }
-                }
-                user.SetId("ST" + userId);
-                user.SetType("student");
-
-                //XmlSerializerオブジェクトを作成 
-                //オブジェクトの型を指定する
-                System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(User));
-                
-                //書き込むファイルを開く（UTF-8 BOM無し）
-                System.IO.StreamWriter sw = new System.IO.StreamWriter( userFileName, false, new System.Text.UTF8Encoding(false));
-                
-                //シリアル化し、XMLファイルに保存する
-                serializer.Serialize(sw, user);
-                
-                //ファイルを閉じる
-                sw.Close();
-            }
-
         }
 
         //もどるボタン
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
+            ReleaseElementSelected();
+
             if (currentPageNum == 0)
             {
                 MessageBox.Show("最初のページです。");
@@ -391,6 +397,9 @@ namespace epubReaderForTeacher1._0
             strokeId = 0;
             drawFlag = false;
 
+            //要素の情報をxhtmlから取得する
+            setElementInfo();
+
             //前に描画した情報があれば読み込む
             try
             {
@@ -407,6 +416,8 @@ namespace epubReaderForTeacher1._0
         //すすむボタン
         private void Button3_Click(object sender, RoutedEventArgs e)
         {
+            ReleaseElementSelected();
+
             try
             {
                 SaveAnnotateRecord();
@@ -435,6 +446,9 @@ namespace epubReaderForTeacher1._0
                 inkCanvas1.Strokes.Clear();
                 strokeId = 0;
                 drawFlag = false;
+
+                //要素の情報をxhtmlから取得する
+                setElementInfo();
 
                 //前に描画した情報があれば読み込む
                 try
@@ -472,6 +486,8 @@ namespace epubReaderForTeacher1._0
         //アノテーション機能にする
         private void AnnotationButton_Click(object sender, RoutedEventArgs e)
         {
+            ReleaseElementSelected();
+
             inkCanvas1.EditingMode = InkCanvasEditingMode.Ink;
             inkCanvas1.Visibility = System.Windows.Visibility.Visible;
             PNGAnnotationToolsWindow paw = new PNGAnnotationToolsWindow();
@@ -613,7 +629,7 @@ namespace epubReaderForTeacher1._0
                 PNGPopupWindow ppw = new PNGPopupWindow();
                 ppw.Owner = this;
                 ppw.Show();
-                ppw.init(popupFileName);
+                ppw.init(popupFileName, thawPath);
             }
         }
 
@@ -665,11 +681,11 @@ namespace epubReaderForTeacher1._0
                         0,
                         elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight(),
                         imageWidth / 2,
-                        imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()));                    
+                        imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()));
 
                     //Grid位置の指定
                     Grid.SetColumn(downerSideImage, 0);
-                    rowDefinition3.Height = new GridLength( imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()), GridUnitType.Pixel );
+                    rowDefinition3.Height = new GridLength(imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()), GridUnitType.Pixel);
 
                     //対象の要素と反対側の領域を指定
                     anotherRect = new System.Drawing.Rectangle(
@@ -955,9 +971,15 @@ namespace epubReaderForTeacher1._0
         //閉じるボタン
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveAnnotateRecord();
-            //ImageCaptureAll();
-            this.Close();
+            if (MessageBox.Show("epubReaderを終了しますか？", "かくにん", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.No)
+            {
+                return;
+            }
+            else
+            {
+                SaveAnnotateRecord();
+                this.Close();
+            }
         }
 
         //描画処理 mousedown
@@ -1091,8 +1113,6 @@ namespace epubReaderForTeacher1._0
         //要素選択処理 mousedown
         private void image1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //Console.WriteLine("mousedown!");
-
             //要素を選択する
             if (!elementSelected)
             {
@@ -1105,149 +1125,28 @@ namespace epubReaderForTeacher1._0
                 //MessageBox.Show("width=" + elementList[0].GetWidth());
                 //MessageBox.Show("height=" + elementList[0].GetHeight());
 
-                int i=0;
-                while(true)
+                int i = 0;
+                while (true)
                 {
                     try
                     {
-                        bool xOK = elementList[i].GetX() * resizeRate < nowX && nowX < elementList[i].GetX() * resizeRate + elementList[i].GetWidth() * resizeRate;
-                        bool yOK = elementList[i].GetY() * resizeRate < nowY && nowY < elementList[i].GetY() * resizeRate + elementList[i].GetHeight() * resizeRate;
+                        bool xOK = (double)elementList[i].GetX() * resizeRate < nowX && nowX < (double)elementList[i].GetX() * resizeRate + (double)elementList[i].GetWidth() * resizeRate;
+                        bool yOK = (double)elementList[i].GetY() * resizeRate < nowY && nowY < (double)elementList[i].GetY() * resizeRate + (double)elementList[i].GetHeight() * resizeRate;
                         if (xOK && yOK)
                         {
-                            //要素が右側にあるか左側にあるか
-                            //左側にあるとき
-                            if (nowX < (ww - 80) / 2)
-                            {
-                                Grid.SetColumn(rect1, 0);
+                            double marginLeft = elementList[i].GetX() * resizeRate;
+                            double marginTop = elementList[i].GetY() * resizeRate;
+                            double marginRight = ww - (elementList[i].GetX() * resizeRate) - (elementList[i].GetWidth() * resizeRate);
+                            double marginBottom = wh - (elementList[i].GetY() * resizeRate) - (elementList[i].GetHeight() * resizeRate);
 
-                                //要素が上下どのあたりの位置にあるか
-                                //（左）上３分の１にあるとき
-                                if (nowY < wh / 3)
-                                {
-                                    Grid.SetRow(rect1, 0);
-
-                                    rect1.Margin = new Thickness(
-                                        elementList[i].GetX() * resizeRate,
-                                        elementList[i].GetY() * resizeRate,
-                                        ww / 2 - elementList[i].GetX() * resizeRate - elementList[i].GetWidth() * resizeRate,
-                                        wh / 3 - elementList[i].GetY() * resizeRate - elementList[i].GetHeight() * resizeRate + 250
-                                    );
-                                    //MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-
-                                    //かつ、真ん中の３分の１にまたがるとき
-                                    if (wh / 3 < elementList[i].GetY() * resizeRate + elementList[i].GetHeight() * resizeRate)
-                                    {
-                                        Grid.SetRowSpan(rect1, 2);
-                                        rect1.Margin = new Thickness(0, 0, 0, 0);
-                                        MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-
-                                        //かつかつ、下３分の１にもまたがるとき
-                                        if (wh * 2 / 3 < elementList[i].GetY() * resizeRate + elementList[i].GetHeight() * resizeRate)
-                                        {
-                                            Grid.SetRowSpan(rect1, 3);
-                                            rect1.Margin = new Thickness(0, 0, 0, 0);
-                                            MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-                                        }
-
-                                    }
-                                }
-
-                                //（左）真ん中３分の１にあるとき
-                                else if (wh / 3 <= nowY && nowY < wh * 2 / 3)
-                                {
-                                    Grid.SetRow(rect1, 1);
-                                    rect1.Margin = new Thickness(0, 0, 0, 0);
-                                    MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-
-                                    //かつ、下３分の１にまたがるとき
-                                    if (wh * 2 / 3 < elementList[i].GetY() * resizeRate + elementList[i].GetHeight() * resizeRate)
-                                    {
-                                        Grid.SetRowSpan(rect1, 2);
-                                        rect1.Margin = new Thickness(0, 0, 0, 0);
-                                        MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-                                    }
-
-                                }
-
-                                //（左）下３分の１にあるとき
-                                else if (wh * 2 / 3 <= nowY)
-                                {
-                                    Grid.SetRow(rect1, 2);
-                                    rect1.Margin = new Thickness(0, 0, 0, 0);
-                                    MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-                                }
-
-                            }
-                            //要素が右側にあるとき
-                            else
-                            {
-                                Grid.SetColumn(rect1, 1);
-
-                                //要素が上下どのあたりの位置にあるか
-                                //（右）上３分の１にあるとき
-                                if (nowY < wh / 3)
-                                {
-                                    Grid.SetRow(rect1, 0);
-
-                                    rect1.Margin = new Thickness(0, 0, 0, 0);
-                                    MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-
-                                    //かつ、真ん中の３分の１にまたがるとき
-                                    if (wh / 3 < elementList[i].GetY() * resizeRate + elementList[i].GetHeight() * resizeRate)
-                                    {
-                                        Grid.SetRowSpan(rect1, 2);
-                                        rect1.Margin = new Thickness(0, 0, 0, 0);
-                                        MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-
-                                        //かつかつ、下３分の１にもまたがるとき
-                                        if (wh * 2 / 3 < elementList[i].GetY() * resizeRate + elementList[i].GetHeight() * resizeRate)
-                                        {
-                                            Grid.SetRowSpan(rect1, 3);
-                                            rect1.Margin = new Thickness(0, 0, 0, 0);
-                                            MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-                                        }
-
-                                    }
-                                }
-
-                                //（右）真ん中３分の１にあるとき
-                                else if (wh / 3 <= nowY && nowY < wh * 2 / 3)
-                                {
-                                    Grid.SetRow(rect1, 1);
-                                    rect1.Margin = new Thickness(
-                                        (elementList[i].GetX() - imageWidth / 2) * resizeRate,
-                                        (elementList[i].GetY() - imageHeight / 3) * resizeRate + 130,
-                                        (imageWidth - elementList[i].GetX() - elementList[i].GetWidth()) * resizeRate,
-                                        ((imageHeight / 3) * 2 - elementList[i].GetY() - elementList[i].GetHeight()) * resizeRate + 230
-                                    );
-                                    //MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-
-                                    //かつ、下３分の１にまたがるとき
-                                    if (wh * 2 / 3 < elementList[i].GetY() * resizeRate + elementList[i].GetHeight() * resizeRate)
-                                    {
-                                        Grid.SetRowSpan(rect1, 2);
-                                        rect1.Margin = new Thickness(0, 0, 0, 0);
-                                        MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-                                    }
-
-                                }
-
-                                //（右）下３分の１にあるとき
-                                else if (wh * 2 / 3 <= nowY)
-                                {
-                                    Grid.SetRow(rect1, 2);
-                                    rect1.Margin = new Thickness(0, 0, 0, 0);
-                                    MessageBox.Show("margin(right, bottom)=(" + rect1.Margin.Right + ", " + rect1.Margin.Bottom + ").");
-                                }
-                            }
-
+                            rect1.Margin = new Thickness(marginLeft, marginTop, marginRight, marginBottom);
                             rect1.Visibility = System.Windows.Visibility.Visible;
+
                             elementSelected = true;
                             PopupButton.Visibility = System.Windows.Visibility.Visible;
                             SpacingButton.Visibility = System.Windows.Visibility.Visible;
                             selectedElementNum = i;
                             break;
-
                         }
                         else
                         {
@@ -1282,6 +1181,16 @@ namespace epubReaderForTeacher1._0
         private void image1_MouseUp(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        //要素の選択を解除する
+        private void ReleaseElementSelected()
+        {
+            rect1.Visibility = System.Windows.Visibility.Hidden;
+            elementSelected = false;
+            PopupButton.Visibility = System.Windows.Visibility.Hidden;
+            SpacingButton.Visibility = System.Windows.Visibility.Hidden;
+            selectedElementNum = -1;
         }
 
         //ピンチイン / ピンチアウトの処理
@@ -1364,9 +1273,9 @@ namespace epubReaderForTeacher1._0
             {
                 //後ろからさかのぼって消えていない線を探す
                 int i;
-                for(i = strokeLines.Count - 1; i >= 0; i--)
+                for (i = strokeLines.Count - 1; i >= 0; i--)
                 {
-                    if( !strokeLines[i].GetEreased() )
+                    if (!strokeLines[i].GetEreased())
                     {
                         strokeLines[i].SetEreased(true);
                         strokeLines[i].SetEreasedTime(learningLogs.Count + 1);
@@ -1421,9 +1330,9 @@ namespace epubReaderForTeacher1._0
         }
 
         //ストローク情報の保存
-        public void SaveAnnotateRecord()
+        private void SaveAnnotateRecord()
         {
-            if( !drawFlag )
+            if (!drawFlag)
             {
                 return;
             }
@@ -1441,9 +1350,9 @@ namespace epubReaderForTeacher1._0
             //XmlSerializerオブジェクトを作成
             //オブジェクトの型を指定する
             System.Xml.Serialization.XmlSerializer strokeSerializer =
-                new System.Xml.Serialization.XmlSerializer(typeof( List<StrokeLine> ));
+                new System.Xml.Serialization.XmlSerializer(typeof(List<StrokeLine>));
             System.Xml.Serialization.XmlSerializer logSerializer =
-                new System.Xml.Serialization.XmlSerializer(typeof( List<LearningLog> ));
+                new System.Xml.Serialization.XmlSerializer(typeof(List<LearningLog>));
 
             //MessageBox.Show(thawPath + "\\strokes\\" + pageContent[currentPageNum].Replace(thawPath + "\\OEBPS\\image\\" , ""));
 
@@ -1463,9 +1372,9 @@ namespace epubReaderForTeacher1._0
         }
 
         //ストローク情報の読み込み
-        public void RoadAnnotateRecord()
+        private void RoadAnnotateRecord()
         {
-            if( !Directory.Exists(thawPath + "\\Strokes") )
+            if (!Directory.Exists(thawPath + "\\Strokes"))
             {
                 Directory.CreateDirectory(thawPath + "\\Strokes");
             }
@@ -1479,18 +1388,18 @@ namespace epubReaderForTeacher1._0
             string logXmlPath = thawPath + "\\LearningLog\\" + pageContent[currentPageNum].Replace(thawPath + "\\OEBPS\\image\\", "") + ".xml";
 
             //XmlSerializerオブジェクトを作成
-            System.Xml.Serialization.XmlSerializer strokeSerializer = new System.Xml.Serialization.XmlSerializer(typeof( List<StrokeLine> ));
+            System.Xml.Serialization.XmlSerializer strokeSerializer = new System.Xml.Serialization.XmlSerializer(typeof(List<StrokeLine>));
             System.Xml.Serialization.XmlSerializer logSerializer = new System.Xml.Serialization.XmlSerializer(typeof(List<LearningLog>));
 
 
             //読み込むファイルを開く
-            System.IO.StreamReader ssr = new System.IO.StreamReader( strokeXmlPath, new System.Text.UTF8Encoding(false));
+            System.IO.StreamReader ssr = new System.IO.StreamReader(strokeXmlPath, new System.Text.UTF8Encoding(false));
             System.IO.StreamReader lsr = new System.IO.StreamReader(logXmlPath, new System.Text.UTF8Encoding(false));
-            
+
             //XMLファイルから読み込み、逆シリアル化する
             strokeLines = (List<StrokeLine>)strokeSerializer.Deserialize(ssr);
             learningLogs = (List<LearningLog>)logSerializer.Deserialize(lsr);
-            
+
             //ファイルを閉じる
             ssr.Close();
             lsr.Close();
@@ -1559,7 +1468,6 @@ namespace epubReaderForTeacher1._0
                 bmp.Save(saveFileName, System.Drawing.Imaging.ImageFormat.Png);
             }
         }
-
 
         //以下、ファイル共有関係のコード（おれもよくわかんない笑）
         /* 
