@@ -38,10 +38,9 @@
         </Button>
         <Button Name="showCaptureButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="8" Click="showCaptureButton_Click" >
             <Button.Background>
-                <ImageBrush ImageSource="Camera.png" Stretch="Uniform"/>
+                <ImageBrush Stretch="Uniform" ImageSource="Camera.png"/>
             </Button.Background>
         </Button>
         <Button Name="closeButton" Content="×" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="10" Click="closeButton_Click" Background="#FFC8C8FF" />
-
     </Grid>
 </Window>
