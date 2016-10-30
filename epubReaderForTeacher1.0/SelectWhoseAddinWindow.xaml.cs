@@ -25,40 +25,35 @@ namespace epubReaderForTeacher1._0
 
         //誰が追加した教材を見るかを選択するWindow
         string addinDirectory;
+        string epubFileName;
+        string nextDirectoryName;
         User user;
 
         //初期処理
-        public void init(string addinDirectory, User user)
+        public void init(string addinDirectory, string epubFileName, string nextDirectoryName, User user)
         {
             this.addinDirectory = addinDirectory;
+            this.epubFileName = epubFileName;
+            this.nextDirectoryName = nextDirectoryName;
             this.user = user;
         }
 
         //管理者が追加した教材
         private void administratorButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowAdministratorAddinWindow saaw = new ShowAdministratorAddinWindow();
-            saaw.Owner = this;
-            saaw.Show();
-            saaw.init(addinDirectory, user);
+            SelectAddinWindow saw = new SelectAddinWindow();
+            saw.Owner = this;
+            saw.Show();
+            saw.init(addinDirectory, epubFileName, nextDirectoryName, "administrator", user);
         }
 
-        //自分以外の児童が追加した教材
+        //児童が追加した教材
         private void studentButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowStudentAddinWindow ssaw = new ShowStudentAddinWindow();
-            ssaw.Owner = this;
-            ssaw.Show();
-            ssaw.init(addinDirectory, user);
-        }
-
-        //自分が追加した教材
-        private void myButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowMyAddinWindow smaw = new ShowMyAddinWindow();
-            smaw.Owner = this;
-            smaw.Show();
-            smaw.init(addinDirectory, user);
+            SelectAddinWindow saw = new SelectAddinWindow();
+            saw.Owner = this;
+            saw.Show();
+            saw.init(addinDirectory, epubFileName, nextDirectoryName, "student", user);
         }
     }
 }

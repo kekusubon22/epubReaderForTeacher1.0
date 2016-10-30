@@ -261,58 +261,12 @@ namespace epubReaderForTeacher1._0
                 //MessageBox.Show("再読み込み失敗");
             }
 
-            //ユーザ情報の読み込み なければ新たに書き入れる
-            string userFileName = epubDirectory.Replace("\\epub", "\\user.xml");
-            if (File.Exists(userFileName))
-            {
-                //XmlSerializerオブジェクトを作成
-                System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(User));
-
-                //読み込むファイルを開く
-                System.IO.StreamReader sr = new System.IO.StreamReader(userFileName, new System.Text.UTF8Encoding(false));
-
-                //XMLファイルから読み込み、逆シリアル化する
-                user = (User)serializer.Deserialize(sr);
-
-                //ファイルを閉じる
-                sr.Close();
-            }
-            else
-            {
-                // 0 以上 512 未満の乱数を取得する
-                Random rand = new System.Random();
-                int r = rand.Next(0, 1000);
-
-                //保存するクラス(User)
-                string userId = r + "";
-                if (r < 100)
-                {
-                    userId = "0" + r;
-                    if (r < 10)
-                    {
-                        userId = "0" + userId;
-                    }
-                }
-                user.SetId("ST" + userId);
-                user.SetType("student");
-
-                //XmlSerializerオブジェクトを作成 
-                //オブジェクトの型を指定する
-                System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(User));
-
-                //書き込むファイルを開く（UTF-8 BOM無し）
-                System.IO.StreamWriter sw = new System.IO.StreamWriter(userFileName, false, new System.Text.UTF8Encoding(false));
-
-                //シリアル化し、XMLファイルに保存する
-                serializer.Serialize(sw, user);
-
-                //ファイルを閉じる
-                sw.Close();
-            }
-
+            //ユーザ情報
+            user.SetId("Administrator");
+            user.SetType("administrator");
         }
 
-        //要素の情報をセットするメソッド
+        //現在のページの要素の情報をセットするメソッド
         public void setElementInfo()
         {
             elementList = new List<Element>();
@@ -514,94 +468,58 @@ namespace epubReaderForTeacher1._0
             saw.CreateCaptureButton(thawPath, epubFileName);
         }
 
-        //デジタルノートへ指定した範囲を送信する
-        private void SendButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        //デジタルノート起動
-        private void RaunchDenoButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         //教材追加ボタン
         private void AddContaintsButton_Click(object sender, RoutedEventArgs e)
         {
-            //ファイル共有するならこっち
-            if (Directory.Exists(GetUniversalName(@"\\MCDYNA01\ContentsData")))
+            //この教師用アプリケーションを起動しているPCが親機となり、教材置き場になる
+            //要素が選択されていたらそれと関連付ける
+            if (elementSelected)
             {
-                myAddinDirectory = @"\\MCDYNA01\ContentsData\Addin\Student\" + user.GetId();
-                string unc_path = GetUniversalName(myAddinDirectory);
-
-                //自分のアドインファイルの置き場がなければつくる
-                if (!Directory.Exists(unc_path))
-                {
-                    Directory.CreateDirectory(unc_path);
-                }
-
-                //自分のアドイン置き場とカメラロールのパスを渡して一覧表示
-                SelectMyAddinWindow smaw = new SelectMyAddinWindow();
-                smaw.Owner = this;
-                smaw.Show();
-                smaw.init(cameraRollDirectory, unc_path, user);
+                myAddinDirectory =
+                    epubDirectory.Replace("epub", "Addin") + "\\Administrator\\" + epubFileName.Replace(".epub", "") + "\\" + elementList[selectedElementNum].GetId();
             }
-
-            //しないならこっち
+            //選択されていなければ単元と関連付ける
             else
             {
-                myAddinDirectory = epubDirectory.Replace("epub", "Addin") + "\\Student\\" + user.GetId();
+                myAddinDirectory =
+                    epubDirectory.Replace("epub", "Addin") + "\\Administrator\\" + epubFileName.Replace(".epub", "") + "\\" + unitName[currentPageNum];
 
-                //自分のアドインファイルの置き場がなければつくる
-                if (!Directory.Exists(myAddinDirectory))
-                {
-                    Directory.CreateDirectory(myAddinDirectory);
-                }
-
-                //自分のアドイン置き場とカメラロールのパスを渡して一覧表示
-                SelectMyAddinWindow smaw = new SelectMyAddinWindow();
-                smaw.Owner = this;
-                smaw.Show();
-                smaw.init(cameraRollDirectory, myAddinDirectory, user);
             }
+
+            //管理者用のアドインファイル置き場がなければつくる
+            if (!Directory.Exists(myAddinDirectory))
+            {
+                Directory.CreateDirectory(myAddinDirectory);
+            }
+
+            //管理者のアドイン置き場とカメラロールのパスを渡して一覧表示
+            SelectMyAddinWindow smaw = new SelectMyAddinWindow();
+            smaw.Owner = this;
+            smaw.Show();
+            smaw.init(cameraRollDirectory, myAddinDirectory, user);
         }
 
         //追加教材閲覧機能ボタン
         private void OpenContaintsAddinButton_Click(object sender, RoutedEventArgs e)
         {
-            //ファイル共有するならこっち
-            if (Directory.Exists(GetUniversalName(@"\\MCDYNA01\ContentsData")))
+            //この教師用アプリケーションを起動しているPCが親機となり、教材置き場になる
+            //アドインファイル置き場のパス
+            addinDirectory = epubDirectory.Replace("epub", "Addin");
+
+            //誰の教材を表示するか選択する画面へ
+            SelectWhoseAddinWindow swaw = new SelectWhoseAddinWindow();
+            swaw.Owner = this;
+            swaw.Show();
+
+            //要素が選択されていればその要素についての、選択されていなければ単元についての教材を表示
+            if (elementSelected)
             {
-                //アドインファイル置き場のパス
-                addinDirectory = @"\\MCDYNA01\ContentsData\Addin";
-                string unc_path = GetUniversalName(addinDirectory);
-
-                //誰の教材を表示するか選択する画面へ
-                SelectWhoseAddinWindow swaw = new SelectWhoseAddinWindow();
-                swaw.Owner = this;
-                swaw.Show();
-                swaw.init(unc_path, user);
+                swaw.init(addinDirectory, epubFileName, elementList[selectedElementNum].GetId(), user);
             }
-
-            //しないならこっち
             else
             {
-                //アドインファイル置き場のパス
-                addinDirectory = epubDirectory.Replace("epub", "Addin");
-
-                //誰の教材を表示するか選択する画面へ
-                SelectWhoseAddinWindow swaw = new SelectWhoseAddinWindow();
-                swaw.Owner = this;
-                swaw.Show();
-                swaw.init(addinDirectory, user);
+                swaw.init(addinDirectory, epubFileName, unitName[currentPageNum], user);
             }
-        }
-
-        //メニューバーを左から右 / 右から左　へ
-        private void MoveMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         //ポップアップボタン

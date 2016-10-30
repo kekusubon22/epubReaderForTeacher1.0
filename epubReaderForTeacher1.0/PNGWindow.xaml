@@ -57,9 +57,6 @@
                 <ImageBrush ImageSource="Addin.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Button Content="おくる" Name="SendButton" Grid.Row="11" Click="SendButton_Click" Grid.ColumnSpan="2" Background="#FFC8F0BE" Visibility="Hidden" />
-        <Button Content="ノートへ" Name="RaunchDenoButton" Grid.Row="12" Click="RaunchDenoButton_Click" Background="#FFC8F0BE" Grid.ColumnSpan="2" Visibility="Hidden" />
-        <Button Content="👉" Name="MoveMenuButton" Grid.Row="13" Click="MoveMenuButton_Click" Background="#FFC8F0BE" Grid.ColumnSpan="2" Visibility="Hidden" />
         <Button Content="" Name="ReviewButton" Grid.Row="6" Click="ReviewButton_Click" Grid.ColumnSpan="2">
             <Button.Background>
                 <ImageBrush ImageSource="Review.png" Stretch="Uniform"/>

@@ -173,6 +173,9 @@
     <Compile Include="PNGAnnotationToolsWindow.xaml.cs">
       <DependentUpon>PNGAnnotationToolsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PNGPopupReviewWindow.xaml.cs">
+      <DependentUpon>PNGPopupReviewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PNGPopupWindow.xaml.cs">
       <DependentUpon>PNGPopupWindow.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,9 @@
     <Compile Include="ReviewAnnotationWindow.xaml.cs">
       <DependentUpon>ReviewAnnotationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectAddinWindow.xaml.cs">
+      <DependentUpon>SelectAddinWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectEpubWindow.xaml.cs">
       <DependentUpon>SelectEpubWindow.xaml</DependentUpon>
     </Compile>
@@ -194,20 +200,11 @@
     <Compile Include="SelectWhoseAddinWindow.xaml.cs">
       <DependentUpon>SelectWhoseAddinWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowAdministratorAddinWindow.xaml.cs">
-      <DependentUpon>ShowAdministratorAddinWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ShowAnnotationWindow.xaml.cs">
       <DependentUpon>ShowAnnotationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShowCaptureWindow.xaml.cs">
       <DependentUpon>ShowCaptureWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ShowMyAddinWindow.xaml.cs">
-      <DependentUpon>ShowMyAddinWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ShowStudentAddinWindow.xaml.cs">
-      <DependentUpon>ShowStudentAddinWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
@@ -246,6 +243,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PNGPopupReviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PNGPopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -262,6 +263,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SelectAddinWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SelectEpubWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -274,23 +279,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowAdministratorAddinWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ShowAnnotationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowCaptureWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ShowMyAddinWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ShowStudentAddinWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

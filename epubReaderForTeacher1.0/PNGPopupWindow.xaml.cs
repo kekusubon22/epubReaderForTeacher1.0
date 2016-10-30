@@ -397,6 +397,23 @@ namespace epubReaderForTeacher1._0
             lsr.Close();
         }
 
+        //ストローク再生画面の表示
+        private void reviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            PNGPopupReviewWindow pprw = new PNGPopupReviewWindow();
+            pprw.Owner = this;
+            pprw.Show();
+            pprw.init(popupPath, strokeLines, learningLogs);
+        }
+
+        //キャプチャ一覧の表示
+        private void showCaptureButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAnnotationWindow saw = new ShowAnnotationWindow();
+            saw.Owner = this;
+
+        }
+
         //閉じるボタン
         private void closeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -408,5 +425,71 @@ namespace epubReaderForTeacher1._0
 
             this.Close();
         }
+
+        ////紙面全体をキャプチャ
+        //public void ImageCaptureAll()
+        //{
+        //    string k = null;
+        //    string searchPageName = pageContent[currentPageNum].Replace(thawPath + "\\OEBPS\\image\\", "");
+        //    //MessageBox.Show(searchPageName);
+
+        //    //保存先にページ.pngが何枚保存されているか調べる
+        //    string[] files = System.IO.Directory.GetFiles(thawPath + "\\LearningRecord", searchPageName + "*" + ".png", System.IO.SearchOption.TopDirectoryOnly);
+
+        //    int i = 0;
+        //    foreach (string f in files)
+        //    {
+        //        i++;
+        //    }
+        //    if (i < 100)
+        //    {
+        //        k = "0" + i;
+        //        if (i < 10)
+        //        {
+        //            k = "0" + k;
+        //        }
+        //    }
+
+        //    //webBrowser1を保存
+        //    string savePath = pageContent[currentPageNum].Replace("\\OEBPS\\image", "\\LearningRecord") + "_" + k + ".png";
+        //    CaptureScreen(savePath);
+        //}
+
+        ////スクリーンショットの処理
+        //public void CaptureScreen(string saveFileName)
+        //{
+        //    System.Windows.Point browserLeftTop = new System.Windows.Point();
+        //    System.Drawing.Size canvasSize = new System.Drawing.Size();
+
+        //    browserLeftTop = image1.PointToScreen(new System.Windows.Point(0.0, 0.0));
+        //    canvasSize.Height = (int)image1.RenderSize.Height;
+        //    canvasSize.Width = (int)image1.RenderSize.Width;
+
+
+        //    System.Drawing.Rectangle rc = new System.Drawing.Rectangle();
+        //    rc.Location = new System.Drawing.Point((int)browserLeftTop.X, (int)browserLeftTop.Y);
+        //    rc.Size = canvasSize;
+
+        //    ImageBrush ib = new ImageBrush();
+
+        //    using (Bitmap bmp = new Bitmap(rc.Width, rc.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+        //    {
+        //        using (Graphics g = Graphics.FromImage(bmp))
+        //        {
+        //            g.CopyFromScreen(rc.X, rc.Y, 0, 0, rc.Size);
+
+        //            ib.ImageSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+        //                bmp.GetHbitmap(),
+        //                IntPtr.Zero,
+        //                Int32Rect.Empty,
+        //                BitmapSizeOptions.FromEmptyOptions());
+        //        }
+
+        //        //スクリーンショットの保存
+        //        bmp.Save(saveFileName, System.Drawing.Imaging.ImageFormat.Png);
+        //    }
+        //}
+
+
     }
 }
