@@ -6,6 +6,6 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="350" FontSize="30" TextAlignment="Center"><Run Text="Welcome to the"/></TextBlock>
         <Image HorizontalAlignment="Left" Height="80" Margin="30,100,0,0" VerticalAlignment="Top" Width="80" Source="eplus.png"/>
         <TextBlock HorizontalAlignment="Left" Margin="95,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="250" FontSize="48" TextAlignment="Center" Foreground="#FF5050E6" FontWeight="Bold" FontFamily="HGPSoeiKakupoptai"><Run Text="pubReader"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="10,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="350" FontSize="30" TextAlignment="Center"><Run Text="Version 1.0"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="10,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="350" FontSize="20" TextAlignment="Center"><Run Language="ja-jp" Text="For Teachers"/><LineBreak/><Run Text="Version 1.0"/></TextBlock>
     </Grid>
 </Window>
