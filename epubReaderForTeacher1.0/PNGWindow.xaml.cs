@@ -458,14 +458,21 @@ namespace epubReaderForTeacher1._0
             cw.Show();
         }
 
-        //学習記録の閲覧
+        //学習記録（キャプチャ）の閲覧
         private void ShowAnnotationButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowAnnotationWindow saw = new ShowAnnotationWindow();
-            saw.Owner = this;
-            saw.Show();
-            saw.Title = epubFileName + "のかきこみ一覧";
-            saw.CreateCaptureButton(thawPath, epubFileName);
+            PNGSelectHowToShowWindow pshsw = new PNGSelectHowToShowWindow();
+            pshsw.Owner = this;
+            pshsw.Show();
+
+            if (elementSelected)
+            {
+                pshsw.init(elementList[selectedElementNum].GetId() + ".png", epubDirectory, epubFileName, user);
+            }
+            else
+            {
+                pshsw.init(pageContent[currentPageNum].Replace(thawPath + "\\OEBPS\\image\\", ""), epubDirectory, epubFileName, user);
+            }
         }
 
         //教材追加ボタン
