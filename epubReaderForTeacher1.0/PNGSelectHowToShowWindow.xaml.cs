@@ -82,29 +82,21 @@ namespace epubReaderForTeacher1._0
             {
                 string searchDirectory = epubDirectory.Replace("epub", "Annotation");
 
-                try
+                //Annotationフォルダ内に内にあるユーザのディレクトリを検索
+                directories = System.IO.Directory.GetDirectories(searchDirectory, "*", SearchOption.TopDirectoryOnly);
+
+                //それぞれのユーザのディレクトリから、対象の要素（あるいはページ）に対するキャプチャを探す
+                foreach (string d in directories)
                 {
-
-                    //Annotationフォルダ内に内にあるユーザのディレクトリを検索
-                    directories = System.IO.Directory.GetDirectories(searchDirectory, "*", SearchOption.TopDirectoryOnly);
-
-                    //それぞれのユーザのディレクトリから、対象の要素（あるいはページ）に対するキャプチャを探す
-                    foreach (string d in directories)
+                    //現在の要素（あるいはページ）に対する全ユーザのキャプチャを検索
+                    string[] captures = System.IO.Directory.GetFiles(d + "\\" + epubFileName.Replace(".epub", ""), imageFileName + "*" + ".png", System.IO.SearchOption.TopDirectoryOnly);
+                    foreach (string c in captures)
                     {
-                        //現在の要素（あるいはページ）に対する全ユーザのキャプチャを検索
-                        string[] captures = System.IO.Directory.GetFiles(d + "\\" + epubFileName.Replace(".epub", ""), imageFileName + "*" + ".png", System.IO.SearchOption.TopDirectoryOnly);
-                        foreach (string c in captures)
-                        {
-                            // 配列を拡張
-                            Array.Resize(ref files, i + 1);
-                            files[i] = c;
-                            i++;
-                        }
+                        // 配列を拡張
+                        Array.Resize(ref files, i + 1);
+                        files[i] = c;
+                        i++;
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("ファイルがありません。");
                 }
             }
 
