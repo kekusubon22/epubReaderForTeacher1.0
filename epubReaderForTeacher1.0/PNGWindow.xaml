@@ -31,7 +31,7 @@
         </Grid.ColumnDefinitions>
         <Button Content="◀" Name="Button2" Click="Button2_Click" Grid.Row="0" Grid.ColumnSpan="2" Background="#FFC8C8FF" />
         <Button Content="▶" Name="Button3" Click="Button3_Click" Grid.Row="1" Background="#FFC8C8FF" Grid.ColumnSpan="2" />
-        <Slider HorizontalAlignment="Stretch" Grid.Row="15" Grid.ColumnSpan="4" Width="Auto" VerticalAlignment="Stretch" Height="Auto" Name="slider1" ValueChanged="slider1_ValueChanged" Maximum="1000" ClipToBounds="True" SnapsToDevicePixels="True" Opacity="2" FontSize="15" VerticalContentAlignment="Stretch" Grid.Column="2"/>
+        <Slider HorizontalAlignment="Stretch" Grid.Row="15" Grid.ColumnSpan="4" Width="Auto" VerticalAlignment="Stretch" Height="Auto" Name="slider1" ValueChanged="slider1_ValueChanged" Maximum="1000" ClipToBounds="True" SnapsToDevicePixels="True" Opacity="2" FontSize="15" VerticalContentAlignment="Stretch" Grid.Column="2" Visibility="Hidden"/>
         <Button Content="" Name="indexButton" Grid.Row="2" Click="indexButton_Click" Grid.ColumnSpan="2" Height="50" VerticalAlignment="Bottom">
             <Button.Background>
                 <ImageBrush ImageSource="Library.png" Stretch="Uniform"/>
@@ -82,7 +82,7 @@
                 <ImageBrush ImageSource="Exit.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <ScrollViewer Grid.Column="2" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Height="Auto" Grid.RowSpan="15" VerticalAlignment="Stretch" Width="Auto" >
+        <ScrollViewer Grid.Column="2" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Height="Auto" Grid.RowSpan="16" VerticalAlignment="Stretch" Width="Auto" >
             <Grid Name="grid2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" Name="rowDefinition1" />
