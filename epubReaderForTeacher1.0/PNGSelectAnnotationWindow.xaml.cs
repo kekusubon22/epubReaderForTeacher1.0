@@ -63,7 +63,7 @@ namespace epubReaderForTeacher1._0
                 {
                     RowDefinition rd1 = new RowDefinition() { Height = new GridLength(200) };
                     grid1.RowDefinitions.Add(rd1);
-                    j = 0;
+                    j = 1;
                     k++;
                 }
                 btn[i].Content = string.Format("{0}." + f, i + 1);
