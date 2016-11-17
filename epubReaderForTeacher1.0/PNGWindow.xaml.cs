@@ -63,12 +63,12 @@ namespace epubReaderForTeacher1._0
         string cameraRollDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Camera Roll";
 
         //表示している画像の元の大きさを表す変数
-        int imageWidth;
-        int imageHeight;
+        int picWidth;
+        int picHeight;
 
         //ウインドウの実際の大きさを示す変数
-        double ww = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - 80;
-        double wh = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+        double image1w;
+        double image1h;
 
         //実際の倍率からどれくらい拡大(縮小)しているか
         double resizeRate = 1;
@@ -112,10 +112,6 @@ namespace epubReaderForTeacher1._0
         {
             this.epubFileName = epubFileName;
             this.epubDirectory = epubDirectory;
-
-            //Imageコンポーネントの実際の大きさ
-            ww = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - 80;
-            wh = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
 
             //解凍先とcontent.opfのパス
             thawPath = epubDirectory + "\\" + epubFileName.Replace(".epub", "");
@@ -215,13 +211,9 @@ namespace epubReaderForTeacher1._0
 
             //画像の幅と高さを取得
             Bitmap bmpBase = new Bitmap(pageContent[currentPageNum]);
-            imageWidth = bmpBase.Width;
-            imageHeight = bmpBase.Height;
+            picWidth = bmpBase.Width;
+            picHeight = bmpBase.Height;
             bmpBase.Dispose();
-
-            //表示倍率の取得
-            resizeRate = ww / imageWidth;
-            wh = imageHeight * resizeRate;
 
             //さいしょはかけない
             inkCanvas1.EditingMode = InkCanvasEditingMode.None;
@@ -264,6 +256,18 @@ namespace epubReaderForTeacher1._0
             //ユーザ情報
             user.SetId("Administrator");
             user.SetType("administrator");
+        }
+
+        //imageコンポーネントと表示倍率の取得
+        public void setImageInfo()
+        {
+            //Imageコンポーネントの実際の大きさ
+            image1w = image1.ActualWidth;
+            image1h = image1.ActualHeight;
+
+            //表示倍率の取得
+            resizeRate = image1w / (double)picWidth;
+            resizeRate = image1h / (double)picHeight;
         }
 
         //現在のページの要素の情報をセットするメソッド
@@ -336,13 +340,9 @@ namespace epubReaderForTeacher1._0
 
             //画像の幅と高さを取得
             Bitmap bmpBase = new Bitmap(pageContent[currentPageNum]);
-            imageWidth = bmpBase.Width;
-            imageHeight = bmpBase.Height;
+            picWidth = bmpBase.Width;
+            picHeight = bmpBase.Height;
             bmpBase.Dispose();
-
-            //表示倍率の取得
-            resizeRate = ww / imageWidth;
-            wh = imageHeight * resizeRate;
 
             //描画情報をクリア
             strokeLines.Clear();
@@ -386,13 +386,9 @@ namespace epubReaderForTeacher1._0
 
                 //画像の幅と高さを取得
                 Bitmap bmpBase = new Bitmap(pageContent[currentPageNum]);
-                imageWidth = bmpBase.Width;
-                imageHeight = bmpBase.Height;
+                picWidth = bmpBase.Width;
+                picHeight = bmpBase.Height;
                 bmpBase.Dispose();
-
-                //表示倍率の取得
-                resizeRate = ww / imageWidth;
-                wh = imageHeight * resizeRate;
 
                 //描画情報をクリア
                 strokeLines.Clear();
@@ -586,7 +582,7 @@ namespace epubReaderForTeacher1._0
                 System.Drawing.Rectangle anotherRect;
 
                 //対象要素が左側にあるとき
-                if (imageWidth / 2 > elementList[selectedElementNum].GetX())
+                if (picWidth / 2 > elementList[selectedElementNum].GetX())
                 {
                     position = "left";
 
@@ -594,7 +590,7 @@ namespace epubReaderForTeacher1._0
                     upperRect = new System.Drawing.Rectangle(
                         0,
                         0,
-                        imageWidth / 2,
+                        picWidth / 2,
                         elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight());
 
                     //Grid位置の指定
@@ -605,19 +601,19 @@ namespace epubReaderForTeacher1._0
                     downerRect = new System.Drawing.Rectangle(
                         0,
                         elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight(),
-                        imageWidth / 2,
-                        imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()));
+                        picWidth / 2,
+                        picHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()));
 
                     //Grid位置の指定
                     Grid.SetColumn(downerSideImage, 0);
-                    rowDefinition3.Height = new GridLength(imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()), GridUnitType.Pixel);
+                    rowDefinition3.Height = new GridLength(picHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()), GridUnitType.Pixel);
 
                     //対象の要素と反対側の領域を指定
                     anotherRect = new System.Drawing.Rectangle(
-                        imageWidth / 2,
+                        picWidth / 2,
                         0,
-                        imageWidth / 2,
-                        imageHeight);
+                        picWidth / 2,
+                        picHeight);
 
                     //Grid位置の指定
                     Grid.SetColumn(anotherSideImage, 1);
@@ -632,9 +628,9 @@ namespace epubReaderForTeacher1._0
 
                     //対象の要素より上側の領域指定
                     upperRect = new System.Drawing.Rectangle(
-                        imageWidth / 2,
+                        picWidth / 2,
                         0,
-                        imageWidth / 2,
+                        picWidth / 2,
                         elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight());
 
                     //Grid位置の指定
@@ -643,21 +639,21 @@ namespace epubReaderForTeacher1._0
 
                     //対象の要素より下側の領域を指定
                     downerRect = new System.Drawing.Rectangle(
-                        imageWidth / 2,
+                        picWidth / 2,
                         elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight(),
-                        imageWidth / 2,
-                        imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()));
+                        picWidth / 2,
+                        picHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()));
 
                     //Grid位置の指定
                     Grid.SetColumn(downerSideImage, 1);
-                    rowDefinition3.Height = new GridLength(imageHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()), GridUnitType.Pixel);
+                    rowDefinition3.Height = new GridLength(picHeight - (elementList[selectedElementNum].GetY() + elementList[selectedElementNum].GetHeight()), GridUnitType.Pixel);
 
                     //対象の要素と反対側の領域を指定
                     anotherRect = new System.Drawing.Rectangle(
                         0,
                         0,
-                        imageWidth / 2,
-                        imageHeight);
+                        picWidth / 2,
+                        picHeight);
 
                     //Grid位置の指定
                     Grid.SetColumn(anotherSideImage, 0);
@@ -771,9 +767,9 @@ namespace epubReaderForTeacher1._0
                 rect1.Visibility = System.Windows.Visibility.Visible;
 
                 //行グリッドの高さを戻す
-                rowDefinition1.Height = new GridLength(imageHeight / 3, GridUnitType.Pixel);
-                rowDefinition2.Height = new GridLength(imageHeight / 3, GridUnitType.Pixel);
-                rowDefinition3.Height = new GridLength(imageHeight / 3, GridUnitType.Pixel);
+                rowDefinition1.Height = new GridLength(picHeight / 3, GridUnitType.Pixel);
+                rowDefinition2.Height = new GridLength(picHeight / 3, GridUnitType.Pixel);
+                rowDefinition3.Height = new GridLength(picHeight / 3, GridUnitType.Pixel);
 
                 spacingNow = false;
                 position = "none";
@@ -796,7 +792,7 @@ namespace epubReaderForTeacher1._0
                 if (sl.GetPoints()[0].Y > targetY)
                 {
                     //左右の判定
-                    if ((position.Equals("left") && sl.GetPoints()[0].X < ww / 2) || (position.Equals("right") && sl.GetPoints()[0].X > ww / 2))
+                    if ((position.Equals("left") && sl.GetPoints()[0].X < image1w / 2) || (position.Equals("right") && sl.GetPoints()[0].X > image1w / 2))
                     {
                         List<System.Windows.Point> newPoints = new List<System.Windows.Point>();
                         for (int j = 0; j < sl.GetPoints().Count; j++)
@@ -869,7 +865,7 @@ namespace epubReaderForTeacher1._0
                 if (sl.GetPoints()[0].Y > spaceY && spaceY + spaceHeight > sl.GetPoints()[0].Y)
                 {
                     //左右の判定
-                    if ((position.Equals("left") && sl.GetPoints()[0].X < ww / 2) || (position.Equals("right") && sl.GetPoints()[0].X > ww / 2))
+                    if ((position.Equals("left") && sl.GetPoints()[0].X < image1w / 2) || (position.Equals("right") && sl.GetPoints()[0].X > image1w / 2))
                     {
                         strokeLines[i].SetInSpace(true);
                         needToRedraw = true;
@@ -1038,6 +1034,8 @@ namespace epubReaderForTeacher1._0
         //要素選択処理 mousedown
         private void image1_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            setImageInfo();
+
             //要素を選択する
             if (!elementSelected)
             {
@@ -1061,8 +1059,8 @@ namespace epubReaderForTeacher1._0
                         {
                             double marginLeft = elementList[i].GetX() * resizeRate;
                             double marginTop = elementList[i].GetY() * resizeRate;
-                            double marginRight = ww - (elementList[i].GetX() * resizeRate) - (elementList[i].GetWidth() * resizeRate);
-                            double marginBottom = wh - (elementList[i].GetY() * resizeRate) - (elementList[i].GetHeight() * resizeRate);
+                            double marginRight = image1w - (elementList[i].GetX() * resizeRate) - (elementList[i].GetWidth() * resizeRate);
+                            double marginBottom = image1h - (elementList[i].GetY() * resizeRate) - (elementList[i].GetHeight() * resizeRate);
 
                             rect1.Margin = new Thickness(marginLeft, marginTop, marginRight, marginBottom);
                             rect1.Visibility = System.Windows.Visibility.Visible;
