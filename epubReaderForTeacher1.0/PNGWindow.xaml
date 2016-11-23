@@ -82,7 +82,7 @@
                 <ImageBrush ImageSource="Exit.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <ScrollViewer Grid.Column="2" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Height="Auto" Grid.RowSpan="16" VerticalAlignment="Stretch" Width="Auto" >
+        <ScrollViewer Grid.Column="2" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Height="Auto" Grid.RowSpan="16" VerticalAlignment="Stretch" Width="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
             <Grid Name="grid2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" Name="rowDefinition1" />

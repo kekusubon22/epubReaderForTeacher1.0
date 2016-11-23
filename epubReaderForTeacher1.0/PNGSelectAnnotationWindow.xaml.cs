@@ -33,6 +33,12 @@ namespace epubReaderForTeacher1._0
         {
             this.files = files;
 
+            if (files.Length == 0)
+            {
+                MessageBox.Show("きろくがありません。");
+                this.Close();
+            }
+
             //ボタンを生成
             Button[] btn = new Button[1024];
 
