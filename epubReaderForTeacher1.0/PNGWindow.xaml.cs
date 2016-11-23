@@ -273,7 +273,7 @@ namespace epubReaderForTeacher1._0
             resizeRate = image1h / (double)picHeight;
 
             //imageの左右の余白の大きさ
-            imageSpace = ((double)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - Button2.ActualWidth - image1w) / (double)2;
+            imageSpace = ((double)this.Width - Button2.ActualWidth - image1w) / (double)2;
         }
 
         //現在のページの要素の情報をセットするメソッド
