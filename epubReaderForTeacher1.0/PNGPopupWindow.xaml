@@ -1,7 +1,7 @@
 ﻿<Window x:Class="epubReaderForTeacher1._0.PNGPopupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PNGPopupWindow" Height="500" Width="650" WindowState="Maximized" WindowStyle="None" Background="#FFC8C8FF">
+        Title="PNGPopupWindow" Height="500" Width="700" WindowState="Maximized" WindowStyle="None" Background="#FFC8C8FF">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -13,6 +13,7 @@
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
@@ -20,27 +21,32 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Rectangle Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="1" Fill="White" Grid.RowSpan="2" />
-        <Image Name="image1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="11" />
-        <InkCanvas Name="inkCanvas1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" Background="Transparent" MouseDown="inkCanvas1_MouseDown" MouseMove="inkCanvas1_MouseMove" MouseUp="inkCanvas1_MouseUp" Grid.RowSpan="2"/>
+        <Rectangle Grid.Column="0" Grid.ColumnSpan="12" Grid.Row="1" Fill="White" Grid.RowSpan="5" />
+        <Image Grid.Column="0" Grid.ColumnSpan="12" Grid.Row="1" Source="note.jpg" Grid.RowSpan="5" Opacity="0.2" Stretch="UniformToFill" />
+        <Image Name="image1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12" Grid.RowSpan="2" />
+        <InkCanvas Name="inkCanvas1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12" Background="Transparent" MouseDown="inkCanvas1_MouseDown" MouseMove="inkCanvas1_MouseMove" MouseUp="inkCanvas1_MouseUp" Grid.RowSpan="5" StylusDown="inkCanvas1_StylusDown" StylusMove="inkCanvas1_StylusMove" StylusUp="inkCanvas1_StylusUp" />
         <Button Name="blackButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="0" Click="blackButton_Click" Background="Black" />
         <Button Name="redButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="1" Click="redButton_Click" Background="Red" HorizontalAlignment="Left" Width="50" />
         <Button Name="blueButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="2" Click="blueButton_Click" Background="Blue" />
         <Button Name="yellowButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="3" Click="yellowButton_Click" Background="Yellow" />
-        <Slider Name="slider1" VerticalAlignment="Stretch" Height="Auto" HorizontalAlignment="Stretch" Width="Auto" Grid.Column="4" Maximum="50" Minimum="1" ValueChanged="slider1_ValueChanged" Value="5" SmallChange="1" Margin="0,20,0,0" />
+        <Slider Name="slider1" VerticalAlignment="Stretch" Height="Auto" HorizontalAlignment="Stretch" Width="Auto" Grid.Column="4" Maximum="50" Minimum="1" ValueChanged="slider1_ValueChanged" Value="3" SmallChange="1" Margin="0,20,0,0" />
         <Button Name="strokeModeChangeButton" Content="直線" VerticalAlignment="Top" Height="50" Grid.Row="0" Grid.Column="5" Click="strokeModeChangeButton_Click" Background="#FFC8C8FF" HorizontalAlignment="Left" Width="50" />
         <Button Name="undoButton" Content="↶" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="6" Click="undoButton_Click" Background="#FFC8C8FF" />
-        <Button Name="reviewButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="7" Click="reviewButton_Click" >
+        <Button Name="clearButton" Content="＊" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="7" Click="clearButton_Click" Background="#FFC8C8FF" />
+        <Button Name="reviewButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="8" Click="reviewButton_Click" >
             <Button.Background>
                 <ImageBrush ImageSource="Review.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        <Button Name="showCaptureButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="8" Click="showCaptureButton_Click" >
+        <Button Name="showCaptureButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="9" Click="showCaptureButton_Click" Visibility="Hidden" >
             <Button.Background>
-                <ImageBrush Stretch="Uniform" ImageSource="Camera.png"/>
+                <ImageBrush Stretch="Uniform" ImageSource="Record.png"/>
             </Button.Background>
         </Button>
-        <Button Name="closeButton" Content="×" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="10" Click="closeButton_Click" Background="#FFC8C8FF" />
+        <Button Name="closeButton" Content="×" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="11" Click="closeButton_Click" Background="#FFC8C8FF" />
     </Grid>
 </Window>

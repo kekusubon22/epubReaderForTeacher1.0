@@ -89,7 +89,7 @@ namespace epubReaderForTeacher1._0
 
         //マウスイベントに必要な変数
         System.Windows.Point startP = new System.Windows.Point();
-        System.Windows.Point nowP = new System.Windows.Point();
+        System.Windows.Point prevP = new System.Windows.Point();
         System.Windows.Point finP = new System.Windows.Point();
         bool dragging = false;
         int counter = 0;
@@ -444,7 +444,6 @@ namespace epubReaderForTeacher1._0
         {
             ReleaseElementSelected();
 
-            inkCanvas1.EditingMode = InkCanvasEditingMode.Ink;
             inkCanvas1.Visibility = System.Windows.Visibility.Visible;
             PNGAnnotationToolsWindow paw = new PNGAnnotationToolsWindow();
             paw.Owner = this;
@@ -909,8 +908,147 @@ namespace epubReaderForTeacher1._0
             }
         }
 
-        //描画処理 mousedown
+        //描画処理（マウス用）
         private void inkCanvas1_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //UIElement el = sender as UIElement;
+            ////Console.WriteLine("まうすがおされたよ");
+
+            ////自由線
+            //if (isFreeLine)
+            //{
+            //    dragging = true;
+            //    points = new List<System.Windows.Point>();
+            //    points.Add(e.GetPosition(el));
+
+            //    prevP = e.GetPosition(el);
+            //}
+
+            ////直線
+            //else
+            //{
+            //    dragging = true;
+            //    startP = e.GetPosition(el);
+            //}
+        }
+
+        //描画処理（マウス用）
+        private void inkCanvas1_MouseMove(object sender, MouseEventArgs e)
+        {
+            //UIElement el = sender as UIElement;
+
+            ////自由線モード
+            //if (dragging && isFreeLine)
+            //{
+            //    points.Add(e.GetPosition(el));
+            //    counter++;
+
+            //    //点の情報を集め、始点と現在の点をむすぶ
+            //    StylusPointCollection spc = new StylusPointCollection();
+            //    spc.Add(new StylusPoint(prevP.X, prevP.Y));
+            //    spc.Add(new StylusPoint(e.GetPosition(el).X, e.GetPosition(el).Y));
+            //    Stroke stroke = new Stroke(spc, inkDA);
+            //    inkCanvas1.Strokes.Add(stroke);
+
+            //    prevP = e.GetPosition(el);
+            //}
+
+            ////直線モード
+            //else if (!isFreeLine && dragging)
+            //{
+            //    inkCanvas1.Strokes.Clear();
+            //    drawAll();
+
+            //    //点の情報を集め、始点と現在の点をむすぶ
+            //    StylusPointCollection spc = new StylusPointCollection();
+            //    spc.Add(new StylusPoint(startP.X, startP.Y));
+            //    spc.Add(new StylusPoint(e.GetPosition(el).X, e.GetPosition(el).Y));
+            //    Stroke stroke = new Stroke(spc, inkDA);
+            //    inkCanvas1.Strokes.Add(stroke);
+
+            //    counter++;
+            //}
+        }
+
+        //描画処理（マウス用）
+        private void inkCanvas1_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            //UIElement el = sender as UIElement;
+
+            ////自由線のとき
+            //if (isFreeLine && dragging)
+            //{
+            //    points.Add(e.GetPosition(el));
+
+            //    //点の情報を集め、始点と現在の点をむすぶ
+            //    StylusPointCollection spc = new StylusPointCollection();
+            //    spc.Add(new StylusPoint(prevP.X, prevP.Y));
+            //    spc.Add(new StylusPoint(e.GetPosition(el).X, e.GetPosition(el).Y));
+            //    Stroke stroke = new Stroke(spc, inkDA);
+            //    inkCanvas1.Strokes.Add(stroke);
+
+            //    //配列strokeLinesに追加
+            //    StrokeLine strokeLine = new StrokeLine();
+            //    strokeLine.SetId(strokeId);
+            //    strokeLine.SetPoints(points);
+            //    strokeLine.SetColor(color);
+            //    strokeLine.SetWidth(inkWidth);
+            //    strokeLine.SetDownNow(false);
+            //    strokeLine.SetInSpace(false);
+            //    strokeLine.SetEreasedTime(-1);
+            //    strokeLines.Add(strokeLine);
+
+            //    //動作ログに記録
+            //    LearningLog log = new LearningLog();
+            //    log.SetStrokeId(strokeId.ToString());
+            //    log.SetBehavior("draw");
+            //    learningLogs.Add(log);
+
+            //    dragging = false;
+            //    strokeId++;
+
+            //    counter = 0;
+            //}
+
+            ////直線のとき
+            //else if (!isFreeLine && dragging)
+            //{
+            //    strokeId++;
+
+            //    inkCanvas1.Strokes.Clear();
+            //    drawAll();
+
+            //    //点の情報を集め、始点と現在の点をむすぶ
+            //    StylusPointCollection spc = new StylusPointCollection();
+            //    spc.Add(new StylusPoint(startP.X, startP.Y));
+            //    spc.Add(new StylusPoint(e.GetPosition(el).X, e.GetPosition(el).Y));
+            //    Stroke stroke = new Stroke(spc, inkDA);
+            //    inkCanvas1.Strokes.Add(stroke);
+
+            //    //pointsに始点と現在の点を格納
+            //    points = new List<System.Windows.Point>();
+            //    points.Add(startP);
+            //    points.Add(e.GetPosition(el));
+
+            //    //配列strokeLinesについか
+            //    StrokeLine strokeLine = new StrokeLine();
+            //    strokeLine.SetId(strokeId);
+            //    strokeLine.SetPoints(points);
+            //    strokeLine.SetColor(color);
+            //    strokeLine.SetWidth(inkWidth);
+            //    strokeLine.SetDownNow(false);
+            //    strokeLine.SetInSpace(false);
+            //    strokeLine.SetEreased(false);
+
+            //    strokeLines.Add(strokeLine);
+
+            //    dragging = false;
+            //    counter = 0;
+            //}
+        }
+
+        //描画処理（ペン用）
+        private void inkCanvas1_StylusDown(object sender, StylusDownEventArgs e)
         {
             UIElement el = sender as UIElement;
             //Console.WriteLine("まうすがおされたよ");
@@ -921,6 +1059,8 @@ namespace epubReaderForTeacher1._0
                 dragging = true;
                 points = new List<System.Windows.Point>();
                 points.Add(e.GetPosition(el));
+
+                prevP = e.GetPosition(el);
             }
 
             //直線
@@ -931,18 +1071,25 @@ namespace epubReaderForTeacher1._0
             }
         }
 
-        //描画処理 mousemove
-        private void inkCanvas1_MouseMove(object sender, MouseEventArgs e)
+        //描画処理（ペン用）
+        private void inkCanvas1_StylusMove(object sender, StylusEventArgs e)
         {
             UIElement el = sender as UIElement;
-            //Console.WriteLine("dragging = " + dragging + " in mousemove");
 
             //自由線モード
             if (dragging && isFreeLine)
             {
                 points.Add(e.GetPosition(el));
-                //Console.WriteLine(e.GetPosition(el));
                 counter++;
+
+                //点の情報を集め、始点と現在の点をむすぶ
+                StylusPointCollection spc = new StylusPointCollection();
+                spc.Add(new StylusPoint(prevP.X, prevP.Y));
+                spc.Add(new StylusPoint(e.GetPosition(el).X, e.GetPosition(el).Y));
+                Stroke stroke = new Stroke(spc, inkDA);
+                inkCanvas1.Strokes.Add(stroke);
+
+                prevP = e.GetPosition(el);
             }
 
             //直線モード
@@ -962,19 +1109,22 @@ namespace epubReaderForTeacher1._0
             }
         }
 
-        //描画処理 mouseup
-        private void inkCanvas1_MouseUp(object sender, MouseButtonEventArgs e)
+        //描画処理（ペン用）
+        private void inkCanvas1_StylusUp(object sender, StylusEventArgs e)
         {
-            drawFlag = true;
-
             UIElement el = sender as UIElement;
-            Console.WriteLine("まうすがはなれたよ");
 
             //自由線のとき
             if (isFreeLine && dragging)
             {
-
                 points.Add(e.GetPosition(el));
+
+                //点の情報を集め、始点と現在の点をむすぶ
+                StylusPointCollection spc = new StylusPointCollection();
+                spc.Add(new StylusPoint(prevP.X, prevP.Y));
+                spc.Add(new StylusPoint(e.GetPosition(el).X, e.GetPosition(el).Y));
+                Stroke stroke = new Stroke(spc, inkDA);
+                inkCanvas1.Strokes.Add(stroke);
 
                 //配列strokeLinesに追加
                 StrokeLine strokeLine = new StrokeLine();
@@ -996,7 +1146,6 @@ namespace epubReaderForTeacher1._0
                 dragging = false;
                 strokeId++;
 
-                Console.WriteLine("配列に自由線を格納しました");
                 counter = 0;
             }
 
@@ -1537,5 +1686,7 @@ namespace epubReaderForTeacher1._0
 
             return unc_path_dest;
         }
+
+        
     }
 }

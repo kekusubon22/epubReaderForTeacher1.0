@@ -101,7 +101,7 @@
                 <Image Name="upperSideImage" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="0" Grid.Column="1" />
                 <Image Name="emptyImage" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="1" Grid.Column="1" />
                 <Image Name="downerSideImage" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="2" Grid.Column="1" />
-                <InkCanvas Name="inkCanvas1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="Transparent" MouseDown="inkCanvas1_MouseDown" MouseMove="inkCanvas1_MouseMove" MouseUp="inkCanvas1_MouseUp" Visibility="Hidden"/>
+                <InkCanvas Name="inkCanvas1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="Transparent" MouseDown="inkCanvas1_MouseDown" MouseMove="inkCanvas1_MouseMove" MouseUp="inkCanvas1_MouseUp" Visibility="Hidden" StylusDown="inkCanvas1_StylusDown" StylusMove="inkCanvas1_StylusMove" StylusUp="inkCanvas1_StylusUp"/>
                 <Rectangle Name="rect1" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3" Fill="#55FF0000" Visibility="Hidden" Margin="100,100,100,100"/>
             </Grid>
         </ScrollViewer>
