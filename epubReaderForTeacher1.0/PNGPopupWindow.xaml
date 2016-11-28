@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         <Rectangle Grid.Column="0" Grid.ColumnSpan="12" Grid.Row="1" Fill="White" Grid.RowSpan="5" />
         <Image Grid.Column="0" Grid.ColumnSpan="12" Grid.Row="1" Source="note.jpg" Grid.RowSpan="5" Opacity="0.2" Stretch="UniformToFill" />
-        <Image Name="image1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12" Grid.RowSpan="2" />
+        <Image Name="image1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12" Grid.RowSpan="4" />
         <InkCanvas Name="inkCanvas1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12" Background="Transparent" MouseDown="inkCanvas1_MouseDown" MouseMove="inkCanvas1_MouseMove" MouseUp="inkCanvas1_MouseUp" Grid.RowSpan="5" StylusDown="inkCanvas1_StylusDown" StylusMove="inkCanvas1_StylusMove" StylusUp="inkCanvas1_StylusUp" />
         <Button Name="blackButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="0" Click="blackButton_Click" Background="Black" />
         <Button Name="redButton" VerticalAlignment="Stretch" Height="Auto" Grid.Row="0" Grid.Column="1" Click="redButton_Click" Background="Red" HorizontalAlignment="Left" Width="50" />

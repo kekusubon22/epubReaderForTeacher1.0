@@ -22,7 +22,7 @@
         <Button Name="goButton" Content="→" Grid.Column="3" Grid.Row="0" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Background="#FFC8C8FF" FontSize="36" Click="goButton_Click" />
         <Button Name="backButton" Content="←" Grid.Column="0" Grid.Row="0" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Background="#FFC8C8FF" FontSize="36" Click="backButton_Click" />
         <Button Name="animationButton" Content="animation" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Background="#FFC8C8FF" FontSize="30" Click="animationButton_Click" Visibility="Hidden" />
-        <Image Name="image1" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="Auto" />
+        <Image Name="image1" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="4" VerticalAlignment="Top" HorizontalAlignment="Center" Width="Auto" Height="Auto" />
         <InkCanvas Name="inkCanvas1" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"  Background="#00FFFFFF"/>
     </Grid>
 </Window>
