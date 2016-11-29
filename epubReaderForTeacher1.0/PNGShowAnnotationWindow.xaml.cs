@@ -42,6 +42,9 @@ namespace epubReaderForTeacher1._0
 
             // Imageコントロールに表示
             image1.Source = m_bitmap;
+
+            //テキストボックスにパスを表示
+            textbox1.Text = imagePath;
         }
 
         //戻るボタン
@@ -57,8 +60,12 @@ namespace epubReaderForTeacher1._0
                 m_bitmap.BeginInit();
                 m_bitmap.UriSource = new Uri(files[nowImageNum]);
                 m_bitmap.EndInit();
+
                 // Imageコントロールに表示
                 image1.Source = m_bitmap;
+
+                //テキストボックスにパスを表示
+                textbox1.Text = files[nowImageNum];
             }
             else
             {
@@ -82,6 +89,9 @@ namespace epubReaderForTeacher1._0
 
                 // Imageコントロールに表示
                 image1.Source = m_bitmap;
+
+                //テキストボックスにパスを表示
+                textbox1.Text = files[nowImageNum];
             }
             catch
             {

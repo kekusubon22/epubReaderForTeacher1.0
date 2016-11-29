@@ -5,14 +5,16 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Name="image1" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <Image Name="image1" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.Row="2" />
         <Button Content="◀" Name="imageBackButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Grid.Row="0" Grid.Column="0" Background="#FFC8C8FF" Click="imageBackButton_Click" />
         <Button Content="▶" Name="imageNextButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Grid.Row="0" Grid.Column="1" Click="imageNextButton_Click" Background="#FFC8C8FF" />
+        <TextBox Name="textbox1" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Stretch" Width="Auto" Background="#FFC8C8FF" FontSize="20" TextAlignment="Left"/>
     </Grid>
 </Window>
