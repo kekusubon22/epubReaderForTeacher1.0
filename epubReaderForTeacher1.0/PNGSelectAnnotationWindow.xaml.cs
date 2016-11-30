@@ -27,11 +27,13 @@ namespace epubReaderForTeacher1._0
 
         //自分のキャプチャ一覧を表示する
         string[] files;
+        string[] users;
 
         //初期処理
-        public void init(string[] files)
+        public void init(string[] files, string[] users)
         {
             this.files = files;
+            this.users = users;
 
             if (files.Length == 0)
             {
@@ -42,13 +44,16 @@ namespace epubReaderForTeacher1._0
             //ボタンを生成
             Button[] btn = new Button[1024];
 
+            //テキストボックスの生成
+            TextBox[] txt = new TextBox[1024];
+
             int j = 0; //グリッドの列要素の位置
             int k = 0; //グリッドの行要素の位置
 
             int i = 0;
             foreach (string f in files)
             {
-
+                //ボタン生成
                 btn[i] = new Button() { Content = f };
                 try
                 {
@@ -59,6 +64,11 @@ namespace epubReaderForTeacher1._0
                     btn[i].Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 255));
                 }
 
+                //テキストボックスの生成
+                txt[i] = new TextBox() { Background = new SolidColorBrush( Color.FromArgb(255, 200, 200, 255) ), FontSize = 20, TextAlignment = TextAlignment.Center };
+                txt[i].Text = users[i];
+
+                //改行するかしないかの判定
                 if (j < 5)
                 {
                     ColumnDefinition cd1 = new ColumnDefinition() { Width = new GridLength(200) };
@@ -69,7 +79,11 @@ namespace epubReaderForTeacher1._0
                 {
                     RowDefinition rd1 = new RowDefinition() { Height = new GridLength(200) };
                     grid1.RowDefinitions.Add(rd1);
+                    RowDefinition rd2 = new RowDefinition() { Height = new GridLength(35) };
+                    grid1.RowDefinitions.Add(rd2);
+
                     j = 1;
+                    k++;
                     k++;
                 }
                 btn[i].Content = string.Format("{0}." + f, i + 1);
@@ -80,8 +94,16 @@ namespace epubReaderForTeacher1._0
                 btn[i].HorizontalAlignment = HorizontalAlignment.Stretch;
                 btn[i].Width = double.NaN;  //Autoという意味
                 btn[i].Height = double.NaN; //Autoという意味
-
                 btn[i].Click += new RoutedEventHandler(btn_Click);
+
+                Grid.SetColumn(txt[i], j - 1);
+                Grid.SetRow(txt[i], k + 1);
+                grid1.Children.Add(txt[i]);
+                txt[i].VerticalAlignment = VerticalAlignment.Stretch;
+                txt[i].HorizontalAlignment = HorizontalAlignment.Stretch;
+                txt[i].Width = double.NaN;
+                txt[i].Height = double.NaN;
+
                 i++;
             }
         }

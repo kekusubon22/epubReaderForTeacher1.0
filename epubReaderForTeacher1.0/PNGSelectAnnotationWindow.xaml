@@ -6,6 +6,7 @@
         <Grid Name="grid1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"/>
+                <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
         </Grid>
     </ScrollViewer>

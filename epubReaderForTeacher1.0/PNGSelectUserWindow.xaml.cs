@@ -111,7 +111,7 @@ namespace epubReaderForTeacher1._0
 
             PNGSelectAnnotationWindow pslaw = new PNGSelectAnnotationWindow();
             pslaw.Show();
-            pslaw.init(files);
+            pslaw.init(files, users);
 
             this.Close();
         }

@@ -50,6 +50,7 @@ namespace epubReaderForTeacher1._0
         {
             string[] directories;
             string[] files = new string[1];
+            string[] users = new string[1];
             int i = 0;
 
             //ファイル共有するならこっち
@@ -73,6 +74,11 @@ namespace epubReaderForTeacher1._0
                             // 配列を拡張
                             Array.Resize(ref files, i + 1);
                             files[i] = c;
+
+                            // 配列を拡張
+                            Array.Resize(ref users, i + 1);
+                            users[i] = d.Replace(unc_path + "\\", "");
+
                             i++;
                         }
                     }
@@ -105,6 +111,11 @@ namespace epubReaderForTeacher1._0
                             // 配列を拡張
                             Array.Resize(ref files, i + 1);
                             files[i] = c;
+
+                            // 配列を拡張
+                            Array.Resize(ref users, i + 1);
+                            users[i] = d.Replace(searchDirectory + "\\", "");
+
                             i++;
                         }
                     }
@@ -119,7 +130,7 @@ namespace epubReaderForTeacher1._0
             PNGSelectAnnotationWindow pslaw = new PNGSelectAnnotationWindow();
             pslaw.Owner = this;
             pslaw.Show();
-            pslaw.init(files);
+            pslaw.init(files, users);
         }
 
         //ユーザごとにすべての要素のキャプチャを表示させる
