@@ -27,13 +27,18 @@ namespace epubReaderForTeacher1._0
 
         //自分のキャプチャ一覧を表示する
         string[] files;
-        string[] users;
+        string[] captureOwnerId;
+
+
+        //要素ごとかユーザごとか
+        bool isElement;
 
         //初期処理
-        public void init(string[] files, string[] users)
+        public void init(string[] files, string[] captureOwnerId, bool isElement)
         {
             this.files = files;
-            this.users = users;
+            this.captureOwnerId = captureOwnerId;
+            this.isElement = isElement;
 
             if (files.Length == 0)
             {
@@ -48,7 +53,7 @@ namespace epubReaderForTeacher1._0
             TextBox[] txt = new TextBox[1024];
 
             int j = 0; //グリッドの列要素の位置
-            int k = 0; //グリッドの行要素の位置
+            int k = 1; //グリッドの行要素の位置
 
             int i = 0;
             foreach (string f in files)
@@ -66,7 +71,7 @@ namespace epubReaderForTeacher1._0
 
                 //テキストボックスの生成
                 txt[i] = new TextBox() { Background = new SolidColorBrush( Color.FromArgb(255, 200, 200, 255) ), FontSize = 20, TextAlignment = TextAlignment.Center };
-                txt[i].Text = users[i];
+                txt[i].Text = captureOwnerId[i];
 
                 //改行するかしないかの判定
                 if (j < 5)
@@ -121,6 +126,20 @@ namespace epubReaderForTeacher1._0
             pshaw.Show();
             pshaw.init(picPath, files, x);
 
+            this.Close();
+        }
+
+        //更新ボタン
+        private void ReloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isElement)
+            {
+                ((PNGSelectHowToShowWindow)this.Owner).elementButton_Click(sender, e);
+            }
+            else
+            {
+                ((PNGSelectHowToShowWindow)this.Owner).userButton_Click(sender, e);
+            }
             this.Close();
         }
     }

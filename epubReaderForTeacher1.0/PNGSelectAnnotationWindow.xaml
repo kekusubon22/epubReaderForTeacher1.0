@@ -5,9 +5,11 @@
     <ScrollViewer Name="scrollViewer1" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto">
         <Grid Name="grid1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="200"/>
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
+            <Button Name="ReloadButton" Content="更新" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Background="#C8C8FF" FontSize="24" Click="ReloadButton_Click" />
         </Grid>
     </ScrollViewer>
 </Window>

@@ -46,12 +46,16 @@ namespace epubReaderForTeacher1._0
         }
 
         //要素（あるいはページ）ごとにすべてのユーザのキャプチャを表示させる
-        private void elementButton_Click(object sender, RoutedEventArgs e)
+        public void elementButton_Click(object sender, RoutedEventArgs e)
         {
+            //キャプチャのリスト（files）のそれぞれの書き主のID
+            string[] captureOwnerId = new string[1];
+
+            isElement = true;
             string[] directories;
             string[] files = new string[1];
-            string[] users = new string[1];
             int i = 0;
+
 
             //ファイル共有するならこっち
             if (Directory.Exists(GetUniversalName(@"\\MCDYNA20\ContentsData")))
@@ -76,8 +80,8 @@ namespace epubReaderForTeacher1._0
                             files[i] = c;
 
                             // 配列を拡張
-                            Array.Resize(ref users, i + 1);
-                            users[i] = d.Replace(unc_path + "\\", "");
+                            Array.Resize(ref captureOwnerId, i + 1);
+                            captureOwnerId[i] = d.Replace(unc_path + "\\", "");
 
                             i++;
                         }
@@ -113,8 +117,8 @@ namespace epubReaderForTeacher1._0
                             files[i] = c;
 
                             // 配列を拡張
-                            Array.Resize(ref users, i + 1);
-                            users[i] = d.Replace(searchDirectory + "\\", "");
+                            Array.Resize(ref captureOwnerId, i + 1);
+                            captureOwnerId[i] = d.Replace(searchDirectory + "\\", "");
 
                             i++;
                         }
@@ -130,14 +134,17 @@ namespace epubReaderForTeacher1._0
             PNGSelectAnnotationWindow pslaw = new PNGSelectAnnotationWindow();
             pslaw.Owner = this;
             pslaw.Show();
-            pslaw.init(files, users);
+            pslaw.init(files, captureOwnerId, isElement);
         }
 
         //ユーザごとにすべての要素のキャプチャを表示させる
-        private void userButton_Click(object sender, RoutedEventArgs e)
+        public void userButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] directories;
+            //Annottionフォルダ内にあるユーザ名のリスト
             string[] users = new string[1];
+
+            isElement = false;
+            string[] directories;
             int i = 0;
 
             //ファイル共有するならこっち

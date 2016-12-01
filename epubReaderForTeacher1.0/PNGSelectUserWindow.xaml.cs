@@ -28,7 +28,12 @@ namespace epubReaderForTeacher1._0
             InitializeComponent();
         }
 
+        //Annotationフォルダ内にあるユーザのリスト
         string[] users;
+
+        //キャプチャのリスト（files）のそれぞれの書き主のID
+        string[] captureOwnerId;
+
         string epubDirectory;
         string epubFileName;
 
@@ -109,9 +114,16 @@ namespace epubReaderForTeacher1._0
                 files = System.IO.Directory.GetFiles(searchDirectory, "*", SearchOption.TopDirectoryOnly);
             }
 
+            for (int i = 0; i < files.Length; i++)
+            {
+                // 配列を拡張
+                Array.Resize(ref captureOwnerId, i + 1);
+                captureOwnerId[i] = userName;
+            }
+
             PNGSelectAnnotationWindow pslaw = new PNGSelectAnnotationWindow();
             pslaw.Show();
-            pslaw.init(files, users);
+            pslaw.init(files, captureOwnerId, false);
 
             this.Close();
         }
